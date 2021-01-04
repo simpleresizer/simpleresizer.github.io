@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Resizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="lib.js"></script>
+  </head>
+  <body onload="pageLoaded()">
+    <div class="splash-interface">
+      <div class="drop-image">
+        <div class="drop-image-dashed-container">
+          <svg class="drop-image-clipart" xmlns="http://www.w3.org/2000/svg" viewBox="0 -28 478 477">
+            <g fill="#9bc9ff">
+              <path d="M431 51H47c-9 0-16 7-16 16v288c0 9 7 16 16 16h384c9 0 16-7 16-16V67c0-9-7-16-16-16zm-32 272H79V99h320zm0 0"/>
+              <path d="M159 211L79 323h96l29-49zm0 0"/>
+              <path d="M204 274l-29 49h224L287 131zm0 0"/>
+            </g>
+            <path d="M399 91H79c-4 0-8 4-8 8v224c0 5 4 8 8 8h320c4 0 8-3 8-8V99c0-4-4-8-8-8zM95 315l64-90 35 49-24 41zm94 0l98-168 98 168zm202-208v187l-97-167a8 8 0 00-14 0l-77 132-37-52a8 8 0 00-14 0l-65 91V107zm0 0" fill="#1e81ce"/>
+            <path d="M477 296l-22-82V67c0-13-11-24-24-24h-22l-6-25c-4-13-17-20-30-17L217 43H47c-13 0-24 11-24 24v28l-5 2c-13 3-21 16-17 29l22 83v146c0 13 11 24 24 24h22l6 25a24 24 0 0030 17l156-42h170c13 0 24-11 24-24v-28l5-1c13-4 21-17 17-30zM377 17c5-1 9 1 10 5l6 21H279zM16 122c-1-4 2-9 6-10h1v35zm85 284c-5 1-9-2-10-6l-6-21h114zm338-51c0 5-4 8-8 8H47c-4 0-8-3-8-8V67c0-4 4-8 8-8h384c4 0 8 4 8 8zm17-45l-1 1v-36l7 26c1 4-2 8-6 9zm0 0" fill="#1e81ce"/>
+            <path d="M191 195a32 32 0 100-64 32 32 0 000 64zm0-48a16 16 0 110 32 16 16 0 010-32zm0 0" fill="#1e81ce"/>
+          </svg>
+          <div class="drop-image-title">
+            <span class="drop-image-title-text">Drop your image here, or </span>
+            <span class="drop-image-browse" onclick="browseForImage()">browse</span>
+          </div>
+          <div class="drop-image-divider">
+            <div class="drop-image-divider-line"></div>
+            <div class="drop-image-divider-text">or</div>
+            <div class="drop-image-divider-line"></div>
+          </div>
+          <input type="text" class="drop-image-paste base-textbox" placeholder="Paste image or URL" oninput="imagePasteTextChanged(event)" />
+          <div class="drop-image-sample-image-label">Or select a sample image below</div>
+          <div class="drop-image-sample-images">
+            <img onclick="clickSampleImage(event)" class="drop-image-si-src" src="https://i.ibb.co/nBnS0sX/field.png" />
+            <img onclick="clickSampleImage(event)" class="drop-image-si-src" src="https://i.ibb.co/kmBqzf5/river.png" />
+            <img onclick="clickSampleImage(event)" class="drop-image-si-src" src="https://i.ibb.co/pvyPyBx/waves.png" />
+            <img onclick="clickSampleImage(event)" class="drop-image-si-src" src="https://i.ibb.co/Hh6pNYT/taiwan.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="editing-interface zero-opacity">
+      <div class="draggable-image">
+        <div class="working-image">
+          <canvas class="my-canvas" width="1" height="1"></canvas>
+          <canvas class="mask-canvas"></canvas>
+          <canvas class="grad-canvas" width="1" height="1"></canvas>
+  
+          <div class="stats-container sc-left">
+            <div class="stat-item-text ac-fi-left" contenteditable="true">0</div>
+            <div class="stat-item-px">px</div>
+          </div>
+          <div class="stats-container sc-top">
+            <div class="stat-item-text ac-fi-top" contenteditable="true">0</div>
+            <div class="stat-item-px">px</div>
+          </div>
+          <div class="stats-container sc-right">
+            <div class="stat-item-text ac-fi-right" contenteditable="true">0</div>
+            <div class="stat-item-px">px</div>
+          </div>
+          <div class="stats-container sc-bottom">
+            <div class="stat-item-text ac-fi-bottom" contenteditable="true">0</div>
+            <div class="stat-item-px">px</div>
+          </div>
+          <div class="stats-container sc-width-scale">
+            <div class="stat-item-text ac-fi-width-scale" contenteditable="true">100</div>
+            <div class="stat-item-px">%</div>
+          </div>
+          <div class="stats-container sc-height-scale">
+            <div class="stat-item-text ac-fi-height-scale" contenteditable="true">100</div>
+            <div class="stat-item-px">%</div>
+          </div>
+          <div class="stats-container sc-width-carve">
+            <div class="stat-item-text ac-fi-width-carve" contenteditable="true">100</div>
+            <div class="stat-item-px">%</div>
+          </div>
+          <div class="stats-container sc-height-carve">
+            <div class="stat-item-text ac-fi-height-carve" contenteditable="true">100</div>
+            <div class="stat-item-px">%</div>
+          </div>
+          <div class="stats-container sc-dimensions">
+            <div class="stat-item-text ac-fi-dimensions">200 x 200</div>
+            <div class="stat-item-px">px</div>
+          </div>
+          <div>
+            <div class="grabber grabber-n"></div>
+            <div class="grabber grabber-ne"></div>
+            <div class="grabber grabber-e"></div>
+            <div class="grabber grabber-se"></div>
+            <div class="grabber grabber-s"></div>
+            <div class="grabber grabber-sw"></div>
+            <div class="grabber grabber-w"></div>
+            <div class="grabber grabber-nw"></div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="button-go-back" onclick="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+      </div>
+
+
+  
+      <div class="page-container">
+        <div></div>
+        <div class="actions-container">
+          <div>
+              
+            <div class="ac-header">
+              <div class="ac-header-label">Image Resizer</div>
+            </div>
+
+            <div class="ac-resize-container">
+              <div class="ac-resize-item" onclick="selectResize('crop')">
+                <div class="ac-resize-item-radio ac-rir-crop ac-rir-selected">
+                  <div class="ac-rir-inner"></div>
+                </div>
+                <span class="ac-rir-label">Crop</span>
+              </div>
+              <div class="ac-resize-item" onclick="selectResize('scale')">
+                <div class="ac-resize-item-radio ac-rir-scale">
+                  <div class="ac-rir-inner"></div>
+                </div>
+                <span class="ac-rir-label">Scale</span>
+              </div>
+              <div class="ac-resize-item" onclick="selectResize('carve')">
+                <div class="ac-resize-item-radio ac-rir-carve">
+                  <div class="ac-rir-inner"></div>
+                </div>
+                <div class="ac-rir-label-container">
+                  <span class="ac-rir-label">Carve</span>
+                  <span class="ac-rir-processing"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ac-image-actions ac-image-actions-crop">
+              <div class="text-canvas-color-container">
+                <div class="text-canvas-label">Background Color</div>
+                <input autocomplete="false" spellcheck="false" autocapitalize="false" class="text-canvas-color" placeholder="Transparent" onkeydown="canvasColorKeydown(event)" oninput="canvasTextColorChanged(event)" />
+                <label class="color-picker-container">
+                  <input class="color-picker" type="color" value="#ff0000" onchange="colorPickerInputChanged(event)">
+                </label>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageAutoCrop()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg>
+                <span class="ac-bia-label">Auto Crop</span>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageOriginalCrop()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Crop</span>
+              </div>
+            </div>
+
+            <div class="ac-image-actions ac-image-actions-scale">
+              <div class="base-button ac-button-image-action" onclick="imageFlipHorizontally()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                <span class="ac-bia-label">Flip Horizontally</span>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageFlipVertically()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg>
+                <span class="ac-bia-label">Flip Vertically</span>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageRotate()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span class="ac-bia-label">Rotate</span>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageOriginalScale()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Scale</span>
+              </div>
+            </div>
+
+            <div class="ac-image-actions ac-image-actions-carve">
+              <div class="base-button ac-button-image-action ac-button-mask-toggle" onclick="toggleMask()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span class="ac-bia-label">Edit Mask</span>
+              </div>
+              <div class="base-button ac-button-image-action" onclick="imageOriginalCarve()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Size</span>
+              </div>
+              <div class="ac-mask-options">
+                <div class="base-button ac-button-image-action ac-button-marker" onclick="toggleMarker()">
+                  <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span class="ac-bia-label">Protection Marker</span>
+                </div>
+                <div class="marker-size-container">
+                  <div class="marker-size-header">
+                    <div class="marker-size-label">Marker Size</div>
+                    <div class="marker-size-amount">
+                      <div class="marker-size-amount-value">10</div>
+                      <div class="marker-size-amount-units">px</div>
+                    </div>
+                  </div>
+                  <div class="marker-size-slider-container prevent-drag" onmousedown="clickMarkerSizeLineMouseDown(event)" 
+                                                                         onmousemove="clickMarkerSizeLineMouseMove(event)" 
+                                                                         onmouseup="clickMarkerSizeLineMouseUp()"
+                                                                         draggable="false">
+                    <div class="marker-size-line prevent-drag" draggable="false"></div>
+                    <div class="marker-size-grabber prevent-drag" draggable="false"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="canvas-zoom-container">
+              <svg class="canvas-zoom-icon-svg" onclick="zoomCanvasOut()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zoom-out"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              <div class="canvas-zoom-label" onclick="zoomCanvasReset()">100%</div>
+              <svg class="canvas-zoom-icon-svg" onclick="zoomCanvasIn()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zoom-in"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            </div>
+    
+            <div class="ac-footer">
+              <div class="base-button ac-button-save" onclick="saveCanvasToFile()">
+                <span class="ac-bia-label ac-bia-label-primary">Save Image</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <a id="link"></a>
+    </div>
+  </body>
+</html>
