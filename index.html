@@ -47,7 +47,6 @@
         <div class="working-image">
           <canvas class="my-canvas" width="1" height="1"></canvas>
           <canvas class="mask-canvas"></canvas>
-          <canvas class="grad-canvas" width="1" height="1"></canvas>
   
           <div class="stats-container sc-left">
             <div class="stat-item-text ac-fi-left" contenteditable="true">0</div>
@@ -80,10 +79,6 @@
           <div class="stats-container sc-height-carve">
             <div class="stat-item-text ac-fi-height-carve" contenteditable="true">100</div>
             <div class="stat-item-px">%</div>
-          </div>
-          <div class="stats-container sc-dimensions">
-            <div class="stat-item-text ac-fi-dimensions">200 x 200</div>
-            <div class="stat-item-px">px</div>
           </div>
           <div>
             <div class="grabber grabber-n"></div>
@@ -138,24 +133,21 @@
             </div>
 
             <div class="ac-image-actions ac-image-actions-crop">
-              <div class="text-canvas-color-container">
-                <div class="text-canvas-label">Background Color</div>
-                <input autocomplete="false" spellcheck="false" autocapitalize="false" class="text-canvas-color" placeholder="Transparent" onkeydown="canvasColorKeydown(event)" oninput="canvasTextColorChanged(event)" />
-                <label class="color-picker-container">
-                  <input class="color-picker" type="color" value="#ff0000" onchange="colorPickerInputChanged(event)">
-                </label>
+              <div class="base-button ac-button-image-action" onclick="imageOriginalCrop()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Crop</span>
               </div>
               <div class="base-button ac-button-image-action" onclick="imageAutoCrop()">
                 <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path></svg>
                 <span class="ac-bia-label">Auto Crop</span>
               </div>
-              <div class="base-button ac-button-image-action" onclick="imageOriginalCrop()">
-                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                <span class="ac-bia-label">Original Crop</span>
-              </div>
             </div>
 
             <div class="ac-image-actions ac-image-actions-scale">
+              <div class="base-button ac-button-image-action" onclick="imageOriginalScale()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Scale</span>
+              </div>
               <div class="base-button ac-button-image-action" onclick="imageFlipHorizontally()">
                 <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
                 <span class="ac-bia-label">Flip Horizontally</span>
@@ -168,20 +160,16 @@
                 <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                 <span class="ac-bia-label">Rotate</span>
               </div>
-              <div class="base-button ac-button-image-action" onclick="imageOriginalScale()">
-                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                <span class="ac-bia-label">Original Scale</span>
-              </div>
             </div>
 
             <div class="ac-image-actions ac-image-actions-carve">
+              <div class="base-button ac-button-image-action ac-button-original-size" onclick="imageOriginalCarve()">
+                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="ac-bia-label">Original Size</span>
+              </div>
               <div class="base-button ac-button-image-action ac-button-mask-toggle" onclick="toggleMask()">
                 <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 <span class="ac-bia-label">Edit Mask</span>
-              </div>
-              <div class="base-button ac-button-image-action" onclick="imageOriginalCarve()">
-                <svg class="ac-ia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                <span class="ac-bia-label">Original Size</span>
               </div>
               <div class="ac-mask-options">
                 <div class="base-button ac-button-image-action ac-button-marker" onclick="toggleMarker()">
@@ -218,6 +206,7 @@
             <div class="ac-footer">
               <div class="base-button ac-button-save" onclick="saveCanvasToFile()">
                 <span class="ac-bia-label ac-bia-label-primary">Save Image</span>
+                <span class="ac-bia-label-size">500 x 300</span>
               </div>
             </div>
           </div>
@@ -226,6 +215,7 @@
         </div>
       </div>
       <a id="link"></a>
+      
     </div>
   </body>
 </html>
